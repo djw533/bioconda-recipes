@@ -1,0 +1,58 @@
+{% set name = "hamburger" %}
+{% set version = "0.2.1" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/djw533/hamburger/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 6d1253940d8f5ca1504d47f25ebffb2e7d35e2acab8da93693b47d382cb7a47f
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  run_exports:
+    - {{ pin_subpackage('hamburger', max_pin="x.x") }}
+
+requirements:
+  build:
+    - python >=3.7, <3.12
+    - pip
+    - setuptools
+    - wheel
+  host:
+    - python >=3.7, <3.12
+    - pip
+  run:
+    - python >=3.7, < 3.12
+    - biopython >1.80
+    - tqdm
+    - pandas
+    - muscle
+    - hmmer
+    - fasttree
+    - r-base >=4.0
+    - r-ggplot2
+    - r-dplyr
+    - r-gggenes
+    - r-rcolorbrewer
+    - r-castor
+    - r-ape
+    - r-glue
+    - bioconductor-ggtree
+
+test:
+  imports:
+    - hamburger
+
+about:
+  home: https://github.com/djw533/hamburger
+  license: GPL-3.0
+  license_file: LICENSE.md
+  summary: "HMmer Based UndeRstandinG of gene clustERs – extract and analyse contiguous gene sets in bacterial genomes."
+
+extra: 
+  recipe-maintainers:
+    - djw533
